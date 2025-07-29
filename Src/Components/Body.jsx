@@ -1,29 +1,24 @@
 import RestaurantCard from "./RestaurantCard";
+import { resList } from "../Utils/mockData";
+import { useState } from "react";
 
 const Body=()=>{
-
-
+ const[reslist,setResList]=useState(resList);
  return<>
     <div id="body" className=" w-full ">
-       
+        <button onClick={()=>{
+            setResList(reslist.filter(function(res){
+                return res.rating>4.1;
+            }))
+            console.log(resList)
+        }}>TOP Rated res</button>
+       <div className="text-3xl px-4 sm:px-8 md:px-64 py-4" >Top Restaurants in Bareilly</div>
         <div id="res-container" className="w-full flex flex-wrap justify-center gap-4
         px-4 sm:px-8  lg:px-64 mt-4">
-            <RestaurantCard name="KFC"
-            cuisine="NorthIndia"/>
-            <RestaurantCard name="Swaad" cuisine="south Indian"/>
-            <RestaurantCard name="Momo Hut" cuisine="Chinese"/>
-            <RestaurantCard name="Burgasta" cuisine="Italian"/>
-            <RestaurantCard name="Roofyard" cuisine="restro"/>
-            <RestaurantCard name="midtown" cuisine="Indian"/>
-            <RestaurantCard name="Satkar" cuisine="ALL"/>
-            <RestaurantCard name="Boston" cuisine="Bakery"/>
-           
-           
-
+            {
+                reslist .map((restaurant,index)=> <RestaurantCard key={index} resdata={restaurant}/>)
+            }
         </div>
-
-
-
     </div>
  </>   
 }

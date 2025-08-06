@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import '../../index.css'
 const Header=()=>{
 const[btnName,setBtn]=useState("Login");
@@ -10,16 +11,16 @@ const[btnName,setBtn]=useState("Login");
                     <div className='text-2xl text-white'>address:Bareilly</div>
                 </div>
                 <div className='w-full sm:w-1/2  flex sm:justify-end mt-4 sm:mt-0'>
-                <nav  className='flex flex-col sm:flex-row gap-2 sm:gap-4 text-white text-2xl'>
-                     <a href="">Search</a>
-                        <a href="">offers</a>
-                        <a href="">Help</a>
-                        <button className='' onClick={()=>{
-                        btnName=== "Login"?setBtn("Logout"):setBtn("Login");     
-                        }}>{btnName}</button>
-                        
-                </nav>               </div>
-
+                    <nav  className='flex flex-col sm:flex-row gap-2 sm:gap-4 text-white text-2xl'>
+                        <a href="">Search</a>
+                            <a href="">offers</a>
+                            <Link to="/about">About Us</Link>
+                            <button className='' onClick={()=>{
+                            btnName=== "Login"?setBtn("Logout"):setBtn("Login");     
+                            }}>{btnName}</button>
+                            
+                    </nav>      
+             </div>
             </div>
     </>
 }

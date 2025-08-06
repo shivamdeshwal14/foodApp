@@ -1,23 +1,23 @@
 import RestaurantCard from "./RestaurantCard";
 import { useEffect, useState } from "react";
 import Shimmer from "./Shimmer";
+import { Link } from "react-router-dom";
 
 const Body=()=>{
  const[resList,setResList]=useState([]);
  const[filtered,setFiltered]=useState([]);
- console.log(filtered);
- 
- const[search,setSearch]=useState(""); 
+  const[search,setSearch]=useState(""); 
 //  fetch using async await 
 const getData= async()=>{
     try {
          const res=await fetch('https://pastebin.com/raw/0QcdEDBL');
          const data= await res.json();
+         console.log(data.data.cards[4].card.card.gridElements.infoWithStyle.restaurants);
          setResList(data.data.cards[4].card.card.gridElements.infoWithStyle.restaurants); 
          setFiltered(data.data.cards[4].card.card.gridElements.infoWithStyle.restaurants)
          
     } catch (error) {
-        console.log(error)
+        console.log("Error in fetch"+error)
     }
   
 
@@ -56,7 +56,11 @@ return resList.length===0 ?(<Shimmer/>) :<>
         <div id="res-container" className="w-full flex flex-wrap justify-center gap-4
         px-4 sm:px-8  lg:px-64 mt-4">
             {
-                filtered.map((restaurant,index)=> <RestaurantCard key={index} resdata={restaurant}/>)
+                filtered.map((restaurant,index)=> 
+                    <Link to={"restaurant/"+restaurant.info.id}  key={restaurant.info.id}>
+                <RestaurantCard resdata={restaurant}/>
+                </Link>
+                )
             }
         </div>
     </div>

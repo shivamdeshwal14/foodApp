@@ -2,12 +2,14 @@ import RestaurantCard from "./RestaurantCard";
 import { useEffect, useState } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const Body=()=>{
  const[resList,setResList]=useState([]);
  const[filtered,setFiltered]=useState([]);
   const[search,setSearch]=useState(""); 
 //  fetch using async await 
+
 const getData= async()=>{
     try {
          const res=await fetch('https://pastebin.com/raw/0QcdEDBL');
@@ -26,7 +28,8 @@ const getData= async()=>{
 
 
 useEffect(()=>{
-    getData();   
+    getData();  
+   
 },[])
 
 
@@ -70,16 +73,3 @@ return resList.length===0 ?(<Shimmer/>) :<>
 export default Body;
 
 
-
-
-
-// fetch using .then()
-//  function getData(){
-//   fetch('https://pastebin.com/raw/0QcdEDBL')
-//     .then(response =>response.json())
-//     .then( json =>{
-//         setResList(json.data.cards[4].card.card.gridElements.infoWithStyle.restaurants);   
-//     })
-//     .catch(err=> console.log(err))
-    
-//  }

@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { RES_MENU } from "./Constants";
+import { RES_MENU } from "../Utils/Constants";
 const useRestaurantMenu=(resId)=>{
 
     const[resInfo,setResInfo]=useState(null);
     //fetch data
-    useEffect(()=>{
+    useEffect(()=>{ 
         fetchData();
     },[])
 

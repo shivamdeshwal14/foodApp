@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import useOnlineStatus from "../CustomHooks/useOnlineStatus";
 
 const Body=()=>{
  const[resList,setResList]=useState([]);
@@ -31,6 +32,11 @@ useEffect(()=>{
     getData();  
    
 },[])
+//check online status if offline then return message using custom Hooks.
+
+const onlineStatus=useOnlineStatus();
+if(onlineStatus===false) return (<h1 className="text-4xl">Looks Like !!you are offline. check your internet connections</h1>);
+
 
 
 return resList.length===0 ?(<Shimmer/>) :<>

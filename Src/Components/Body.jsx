@@ -1,4 +1,4 @@
-import RestaurantCard from "./RestaurantCard";
+import RestaurantCard,{withPromotedLabel} from "./RestaurantCard";
 import { useEffect, useState } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
@@ -9,13 +9,18 @@ const Body=()=>{
  const[resList,setResList]=useState([]);
  const[filtered,setFiltered]=useState([]);
   const[search,setSearch]=useState(""); 
+
+  const RestaurantCardPromoted=withPromotedLabel(RestaurantCard);
 //  fetch using async await 
+
+const label=true;
+
 
 const getData= async()=>{
     try {
          const res=await fetch('https://pastebin.com/raw/0QcdEDBL');
          const data= await res.json();
-         console.log(data.data.cards[4].card.card.gridElements.infoWithStyle.restaurants);
+        // console.log(data.data.cards[4].card.card.gridElements.infoWithStyle.restaurants);
          setResList(data.data.cards[4].card.card.gridElements.infoWithStyle.restaurants); 
          setFiltered(data.data.cards[4].card.card.gridElements.infoWithStyle.restaurants)
          
@@ -67,7 +72,12 @@ return resList.length===0 ?(<Shimmer/>) :<>
             {
                 filtered.map((restaurant,index)=> 
                     <Link to={"restaurant/"+restaurant.info.id}  key={restaurant.info.id}>
-                <RestaurantCard resdata={restaurant}/>
+                    {
+                        label==true ?(<RestaurantCardPromoted resdata={restaurant}/>):(
+                             <RestaurantCard resdata={restaurant}/>)
+                    }
+                
+               
                 </Link>
                 )
             }

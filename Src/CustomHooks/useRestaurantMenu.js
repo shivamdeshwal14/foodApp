@@ -6,7 +6,7 @@ const useRestaurantMenu=(resId)=>{
     //fetch data
     useEffect(()=>{ 
         fetchData();
-    },[])
+    },[resId])
 
     const fetchData=async ()=>{
         const res=await fetch(RES_MENU+resId+'&catalog_qa=undefined&query=belgian%20waffle&submitAction=ENTER');

@@ -1,7 +1,7 @@
 import { useRouteError } from "react-router-dom";
 const Error=()=>{
     const err=useRouteError();
-    console.log("error",err);
+    console.log("error page",err);
     
     return <>
         <div>OOPS! Path not found</div>

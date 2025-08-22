@@ -4,32 +4,43 @@ import MenuItem from "./MenuItem";
     import { useParams } from "react-router-dom";
 import { RES_MENU } from "../Utils/Constants";
 import useRestaurantMenu from "../CustomHooks/useRestaurantMenu";
+import RestaurantDetailCard from "./MenuComponents/RestaurantDetailCard";
+import DealsForYou from "./MenuComponents/DealsForYou";
+import MenuCategory from "./MenuComponents/MenuCategory";
 
     const RestaurantMenu=()=>{
     const {resId}=useParams();
     const resInfo=useRestaurantMenu(resId);
-    const[menu,setMenu]=useState([]);
-      console.log(resInfo);
+       
+
+if(resInfo==null) return<h1>Loadinggggg</h1>
+
+console.log(resInfo);
+
+const resDetails=resInfo?.data?.cards[2]?.card?.card?.info;
+
+const categories=resInfo?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR
+?.cards.filter(function(card){
+    return card?.card?.card?.["@type"]==='type.googleapis.com/swiggy.presentation.food.v2.ItemCategory';
+})
 
 
-    return (resInfo===null) ? <Shimmer/> :<>
-        <div className="w-full">    
-                 <div id="res-container" className="w-full flex flex-wrap justify-center gap-4
-                     px-4 sm:px-8  lg:px-64 mt-8">
-                        <div id="res-card" className="min-h-68 w-full px-16 rounded-xl">
-                                {/* <h3>{resInfo.data.cards[0].card.card.text}</h3> */}
-                                <h1 className="text-3xl font-bold">{resInfo.data.cards[0].card.card.text}</h1>
-                                <h2 className="text-2xl mt-16">Recommended</h2>
 
-                            {/* Menu Items are calling here passingdata as props */}
-                               {
-                                menu.map(function callback(item,index){
-                                    return <MenuItem key={index} menuItems={item}/>
-                                })
+return<>
+        <div className="w-full lg:w-[70%] xl:w-[50%] mx-auto">    
+            <RestaurantDetailCard resDetails={resDetails}/>
+            <DealsForYou/>
+           
+               {
+                categories.map((Items,index)=>{
+                    return <MenuCategory key={Items.card.card.categoryId} category={Items}/>
+                })
+            }
 
-                               }
-                             </div>
-                         </div>
+        
+
+
+                
             </div>
         </>
 }

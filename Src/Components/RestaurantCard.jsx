@@ -2,19 +2,25 @@ import { RES_URL } from "../Utils/Constants";
 
 const RestaurantCard=(props)=>{
     
-       
-    const {name,avgRating,cuisines,locality}=props?.resdata?.info;
-    const {slaString}=props.resdata.info.sla
+    // ye wala live api me kaam krrha tha abhi  dummy wale k lie niche wala h 
+    // const {name,avgRating,cuisines,locality,sla,cloudinaryImageId}=props.resdata.card.card.info;
+    
+        const {name,avgRating,cuisines,locality,sla,cloudinaryImageId}=props.resdata?.info;
+
+
 
 return<>
-     <div id="res-card" className="min-h-68 w-56 rounded-xl hover:border-1  hover:cursor-pointer">
-        <img src={RES_URL+props.resdata.info.cloudinaryImageId}
+     <div id="res-card" className="min-h-80 w-56 rounded-xl bg-white hover:shadow-xl py-2 hover:cursor-pointer">
+        <img src={RES_URL+cloudinaryImageId}
         className="rounded-xl h-42 w-full"
         alt="" />
+        <div className="py-4 px-2 space-y-2">
         <p className="text-xl ">{name}</p>
-        <p className="">{avgRating+" stars"+"   "+slaString}</p>
-        <p className="text-slate-500">{cuisines.join(',')}</p>  
-        <p className="text-slate-500">{locality}</p>  
+        <p className="">*️⃣ {avgRating+" stars"+"   "+sla.slaString }</p>
+        <p className="text-slate-500 max-w-full break-all">{cuisines.join(',')}</p>  
+        <p className="text-slate-500">📍 {locality}</p>  
+        </div>
+        
      </div>
     </>
 }

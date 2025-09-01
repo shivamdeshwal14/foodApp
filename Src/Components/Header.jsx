@@ -1,30 +1,109 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useContext, useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import '../../index.css'
 import useOnlineStatus from '../CustomHooks/useOnlineStatus';
-const Header=()=>{
-const[btnName,setBtn]=useState("Login");
+import userContext from '../Utils/userContext';
+import { useSelector } from 'react-redux';
+import { FaBars } from "react-icons/fa";
 
-return<>
-            <div id="header" className='w-full bg-red-500 flex flex-col sm:flex-row py-4 px-4 sm:px-8 md:px-16 lg:px-32 xl:px-64 border border-2'>
-                <div className='w-1/2 max-h-fit flex'>                  
-                    <div className='text-2xl text-white'>address:Bareilly</div>
-                </div>
-                <div className='w-full sm:w-1/2  flex sm:justify-end mt-4 sm:mt-0'>
-                    <nav  className='flex flex-col sm:flex-row gap-2 sm:gap-4 text-white text-2xl'>
-                
-                        <a href="">Search</a>
-                            <a href="">offers</a>
-                            <Link to="/grocery">Grocery</Link>
-                            <Link to="/about">About Us</Link>
-                            <button className='' onClick={()=>{
-                            btnName=== "Login"?setBtn("Logout"):setBtn("Login");     
-                            }}>{btnName}</button>
-                            
-                    </nav>      
-             </div>
+const Header = () => {
+  const [isopen, setIsopen] = useState(false);
+  const cartItems=useSelector((store)=>store.cart.items)
+    
+  return (
+    <>
+      
+      <header
+        className="flex-col bg-white fixed mt-0 inset-x-0 z-50 py-4 sm:shadow-xl md:px-24 rounded-2xl mx-auto w-full"
+        role="banner"
+      >
+        <div className="flex items-center justify-between p-2">
+          <NavLink
+            to="/"
+            onClick={() => {
+              setIsopen(false);
+            }}
+          >
+            <div id="logo-div" className="sm:px-8">
+           
+              Logo
             </div>
+          </NavLink>
+
+          <nav className="space-x-6 hidden sm:flex flex-col sm:flex-row" aria-label="Main Navigation">
+            <NavLink to="/" className="hover:cursor-pointer text-xl">
+              Home
+            </NavLink>
+            <NavLink to="/about" className="hover:cursor-pointer text-xl">
+              About Us
+            </NavLink>
+            <NavLink to="/cart" className="hover:cursor-pointer text-xl">
+             {cartItems.length +" "}🛒
+            </NavLink>
+             <NavLink  className="hover:cursor-pointer text-xl">
+                 👤 Shivam
+            </NavLink>
+          </nav>
+
+          <button
+            className="sm:hidden text-xl"
+            aria-label="Toggle menu"
+            aria-expanded={isopen}
+            onClick={() => {
+              setIsopen(!isopen);
+            }}
+          >
+            <FaBars />
+          </button>
+        </div>
+
+        {isopen && (
+          <nav
+            className="flex flex-col space-y-2 sm:hidden p-4 bg-neutral-50 rounded-2xl flex-wrap"
+            aria-label="Mobile Navigation"
+          >
+            <NavLink
+              to="/"
+              onClick={() => {
+                setIsopen(false);
+              }}
+              className="hover:cursor-pointer text-xl"
+            >
+              Home
+            </NavLink>
+            <NavLink
+              to="/about"
+              onClick={() => {
+                setIsopen(false);
+              }}
+              className="hover:cursor-pointer text-xl"
+            >
+              About Us
+            </NavLink>
+            <NavLink
+              to="/cart"
+              onClick={() => {
+                setIsopen(false);
+              }}
+              className="hover:cursor-pointer text-xl"
+            >
+             {cartItems.length} Cart
+            </NavLink>
+
+            <NavLink
+              
+              onClick={() => {
+                setIsopen(false);
+              }}
+              className="hover:cursor-pointer text-xl"
+            >
+             Logout
+            </NavLink>
+          </nav>
+        )}
+      </header>
     </>
-}
+  );
+};
 
 export default Header;

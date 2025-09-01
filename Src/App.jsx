@@ -7,18 +7,37 @@
     import Error from "./Components/Error";
     import RestaurantMenu from "./Components/RestaurantMenu";
     // import Grocery from "./Components/Grocery";
-    
+    import userContext from "./Utils/userContext";
+import Cart from "./Components/Cart/Cart";
+import { Provider } from "react-redux";
+import appStore from "./Redux/appStore";
 
 
-        const Grocery=lazy(()=>   import("./Components/Grocery"))
 
 const App=()=>{
+    const [searched , setSearched] = useState("");
+
 
 
     return<>
-    <Header/>
-    <Outlet/>
+    <Provider store={appStore}>
 
+    
+
+    <userContext.Provider value={{name:"Anushka",searched,setSearched}}>
+
+    <div className='flex flex-col min-h-screen'>
+      <Header/>
+   <main className='pt-32 flex-grow'>
+    
+       <Outlet/>  
+   </main>
+
+    </div>
+     </userContext.Provider>
+
+
+     </Provider>
     </>
     
 
@@ -31,6 +50,7 @@ const App=()=>{
 
 }
 const appRouter=createBrowserRouter([
+   
     {
         path:'/',
         element:<App/>,
@@ -47,10 +67,13 @@ const appRouter=createBrowserRouter([
             path:'/restaurant/:resId',
             element:<RestaurantMenu/>
             },
+            
+           
             {
-            path:'/grocery',
-            element:<Suspense fallback={<h1>Loading....</h1>}><Grocery/></Suspense>
-            }
+            path:'/cart',
+            element:<Cart/>
+            },
+            
         ],
         errorElement:<Error/>
     },

@@ -6,6 +6,7 @@ const useRestaurantMenu=(resId)=>{
     //fetch data
     useEffect(()=>{ 
         fetchData();
+      
     },[resId])
 
     const fetchData=async ()=>{

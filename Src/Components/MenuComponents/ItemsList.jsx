@@ -1,10 +1,20 @@
+import { useDispatch, useSelector } from "react-redux";
 import { RES_URL } from "../../Utils/Constants";
+import { addItem, removeItem } from "../../Redux/cartSlice";
+// here we are getting items (array of items in each categrory ) then 
+//  we arw mapping the array to show all items
+const ItemsList=({items,resId})=>{
+    const dispatch=useDispatch();
 
-const ItemsList=({items})=>{
-    // const{name,description,price,imageId}=props.itemsData.card.info;
+    const handleAddItem=(item)=>{
+        dispatch(addItem({item,resId}))
+    }
 
-
-   
+    const handleRemoveItem=(item)=>{
+      dispatch(removeItem(item))
+    }
+    const cartItems=useSelector((store)=>store.cart.items);
+   console.log(items)
     
     return(
         <div >
@@ -15,13 +25,27 @@ const ItemsList=({items})=>{
                                    <div className="w-full md:w-2/3 p-2">
                                         <p className="font-bold text-slate-700 text-2xl">{item.card.info.name}</p>
                                       <p>Rs {item.card.info.price/100 || item.card.info.defaultPrice/100} </p>
-                                      
-                                      <p className="text-slate-600 w-[90%] breaks-word whitespace-normal text-justify ">{
-                                        item.card.info.description
-                                        }</p>
+                                      <div className=" flex break-all mt-4 text-slate-600 text-sm flex-wrap">{
+                                        item.card.info.description}
+                                         
+                                      </div>
+                                     
                                     </div>
-                                    <div className="w-full md:w-1/3 p-2">
-                                      <img className="rounded-xl h-[70%]" src={RES_URL+item.card.info.imageId} alt="Image" />
+                                    <div className="w-full md:w-1/3 p-4  relative">
+                                      <img className="rounded-xl  m-auto" src={RES_URL+item.card.info.imageId} alt="Image" />
+                                
+                                         <div className="flex justify-center">
+                                                    <div className="bg-black hover:cursor-pointer w-[30%] flex justify-between px-4 text-white p-2 rounded-xl absolute bottom-2">
+                                                        <button className="hover:cursor-pointer" onClick={()=>handleRemoveItem(item)}> - </button>
+                                                          {
+                                                          cartItems.find(i=>i.card.info.id===item.card.info.id)?.quantity ||" Add"
+                                                          }
+                                                          
+                                                      <button className="hover:cursor-pointer"  onClick={()=>handleAddItem(item)}>+</button>
+                                                </div>
+
+                                            </div>
+                                      
                                     </div> 
 
                       </div>

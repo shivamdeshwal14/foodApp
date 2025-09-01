@@ -1,4 +1,4 @@
-import { RES_URL } from "../Utils/Constants";
+import { RES_URL } from "../../Utils/Constants";
 
     const MenuItem=(props)=>{
         // console.log(props.menuItems.card.info);

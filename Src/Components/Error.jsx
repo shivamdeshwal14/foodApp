@@ -4,9 +4,14 @@ const Error=()=>{
     console.log("error page",err);
     
     return <>
-        <div>OOPS! Path not found</div>
-        <h2>{err.data}</h2>
-        <h2>{err.status}</h2>
+        <div className="w-full p-32 gap-8  h-screen">
+
+            <h2 className=" text-center p-8 text-3xl md:text-4xl text-red-500 font-bold">Something Went Wrong</h2>
+             <h2 className="text-center p-4">{err.data}</h2>
+            <h2 className="text-center p-4  ">{err.status}</h2>
+
+        </div>
+       
     </>
 }
 

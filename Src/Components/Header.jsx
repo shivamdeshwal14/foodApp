@@ -9,7 +9,9 @@ import { FaBars } from "react-icons/fa";
 const Header = () => {
   const [isopen, setIsopen] = useState(false);
   const cartItems=useSelector((store)=>store.cart.items)
-    
+  const user=useSelector((store)=>store.user.userDetails)
+  console.log(user);
+  
   return (
     <>
       
@@ -34,15 +36,19 @@ const Header = () => {
             <NavLink to="/" className="hover:cursor-pointer text-xl">
               Home
             </NavLink>
-            <NavLink to="/about" className="hover:cursor-pointer text-xl">
-              About Us
+             <NavLink to="/orderHistory" className="hover:cursor-pointer text-xl">
+             Orders
             </NavLink>
+            
             <NavLink to="/cart" className="hover:cursor-pointer text-xl">
              {cartItems.length +" "}🛒
             </NavLink>
              <NavLink  className="hover:cursor-pointer text-xl">
                  👤 Shivam
             </NavLink>
+            <NavLink className="hover:cursor-pointer text-xl" to={"/login"}>
+                 Login
+             </NavLink>
           </nav>
 
           <button

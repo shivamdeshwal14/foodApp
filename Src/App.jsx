@@ -11,6 +11,9 @@
 import Cart from "./Components/Cart/Cart";
 import { Provider } from "react-redux";
 import appStore from "./Redux/appStore";
+import Footer from "./Components/Footer";
+import OrderHistory from "./Components/OrderHistory"
+import Login from "./Components/Auth/Login";
 
 
 
@@ -26,15 +29,19 @@ const App=()=>{
 
     <userContext.Provider value={{name:"Anushka",searched,setSearched}}>
 
-    <div className='flex flex-col min-h-screen'>
+    <div className='flex flex-col min-h-screen bg-slate-100'>
       <Header/>
    <main className='pt-32 flex-grow'>
     
        <Outlet/>  
    </main>
 
+
+    <Footer/>
     </div>
      </userContext.Provider>
+
+
 
 
      </Provider>
@@ -59,9 +66,13 @@ const appRouter=createBrowserRouter([
               path:'/',
              element:<Body/>
           },
+          {
+              path:'/login',
+             element:<Login/>
+          },
              {
-            path:'/about',
-            element:<About/>
+            path:'/orderHistory',
+            element:<OrderHistory/>
             },
             {
             path:'/restaurant/:resId',

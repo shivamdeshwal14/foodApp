@@ -9,7 +9,7 @@ const CartItemsList=({items})=>{
     const cartItems=useSelector((store)=>store.cart.items);
      const restaurant=useSelector((store)=>store.restaurant.res);
     //  const {resId}=restaurant[0]
-    console.log(restaurant)
+   
      const resId=restaurant[0]?.restaurant?.id || 0;
      
     //  console.log(restaurant)

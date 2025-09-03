@@ -66,7 +66,7 @@ const fetchRestaurant= async(lat,lng,id)=>{
 //    setResList(myres || []);   
     }
     catch (error){
-        console.log(error);
+        console.log("error",error);
         
     }
    

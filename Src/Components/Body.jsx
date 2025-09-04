@@ -13,8 +13,12 @@ const Body=()=>{
  const[resList,setResList]=useState([]);
  const[filtered,setFiltered]=useState([]);
   const[search,setSearch]=useState(""); 
-  const [selectedCity,setSelectedCity]=useState(locations[0]);
-  const [selectedFood,setSelectedFood]=useState({name:"Momo", id:"80461"});
+
+// console.log(resList);
+
+// console.log(search);
+
+  
 
 
 
@@ -32,45 +36,61 @@ const handleSearchChange=(e)=>{
     setFiltered(resList);
  }
  else{
-    const filteredRes=resList.filter(res=> res?.card?.card?.info?.name.toLowerCase().includes(search.toLowerCase()))
+    const filteredRes=resList.filter(res=> {
+        console.log("Res",res)
+       return res?.info?.name.toLowerCase().includes(search.toLowerCase())
+    }
+    )    
     setFiltered(filteredRes)
 
  } 
 }
 
+const fetchRestaurant=async()=>{
+    try {
+                     const apiData=await fetch('https://pastebin.com/raw/0QcdEDBL');
+                    const data=await apiData.json();
+                               
+                    let res= data?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants
+                    const mincard=32;
+                    while(res.length<32){
+                        res=[...res,...res];
+                    }
+                    res=res.slice(0,mincard);
+                     setFiltered(res);
+                     setResList(res);
 
-
-const fetchRestaurant= async(lat,lng,id)=>{
-    try{
-    const api=getResURLCollection(lat,lng,id);  
-    // console.log(api);
-    
-    const apiData=await fetch('https://pastebin.com/raw/0QcdEDBL',{
-        
-    });
-    const data=await apiData.json();
-;
-      
-    // console.log(data?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
-    setFiltered(data?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
-    setResList(data?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
-    //  
-    // these are for live api data as it is bloced currently we are using dummy data 
-
-    // const myres=data?.data?.cards?.filter(function(card){
-    //     return card?.card?.card?.["@type"]=='type.googleapis.com/swiggy.presentation.food.v2.Restaurant';
-    // })
-    // // console.log(myres);
-    
-//      setFiltered(myres ||[]);
-//    setResList(myres || []);   
-    }
-    catch (error){
-        console.log("error",error);
-        
-    }
-   
+    } catch (error) {
+        console.log("ERROR IN FETCH",error);
+          
+    }   
 }
+
+// const fetchRestaurantByLiveApi= async(lat,lng,id)=>{
+//     try{
+//     const api=getResURLCollection(lat,lng,id);  
+//     // console.log(api);
+    
+//     const apiData=await fetch(api,{
+        
+//     });
+//     const data=await apiData.json();
+//     console.log(data);   
+//     let res= data?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants
+//     const myres=data?.data?.cards?.filter(function(card){
+//         return card?.card?.card?.["@type"]=='type.googleapis.com/swiggy.presentation.food.v2.Restaurant';
+//     })
+//     setFiltered(myres ||[]);
+//    setResList(myres || []);   
+//     }
+//     catch (error){
+//         console.log("error",error);
+        
+//     }
+   
+// }
+
+
 const handleSelect=(city)=>{
     setSelectedCity(city);
 
@@ -81,10 +101,10 @@ const handleFoodSelect=(food)=>{
 
 useEffect(()=>{
 
-    fetchRestaurant(selectedCity.lat,selectedCity.lng, selectedFood.id)
+    fetchRestaurant();
        // 
    
-},[selectedFood,selectedCity])
+},[])
 
 
 
@@ -92,7 +112,12 @@ useEffect(()=>{
 //check online status if offline then return message using custom Hooks.
 
 const onlineStatus=useOnlineStatus();
-if(onlineStatus===false) return (<h1 className="text-4xl">Looks Like !!you are offline. check your internet connections</h1>);
+if(onlineStatus===false) return (
+
+    <div className="w-full flex items-center">
+        <h1 className="text-4xl text-center px-4">Looks Like !!you are offline. check your internet connections</h1>
+    </div>
+);
 
 
 
@@ -103,23 +128,8 @@ return resList?.length===0 || undefined ?(<Shimmer/>) :<>
 {/* search restaurant */}
                  <div className="w-full md:w-[90%] mx-auto gap-4 p-2 sm:p-4 flex flex-col-reverse sm:flex-row   space-x-4  ">
                   
-                   <div className="  ">
-                    <DropDown cities={locations}
-                    onSelect={handleSelect}
-                    selectedCity={selectedCity}
-                    />
-                    <DropDownFood
-                    foodTypes={FoodType}
-                    onSelect={handleFoodSelect}
-                    selectedFood={selectedFood}
-                    />
-                
-                   </div>
                    
-                   <div>
-                  
-
-                   </div>
+                   
                     <input
                     type="text"
                     value={search}
@@ -133,17 +143,17 @@ return resList?.length===0 || undefined ?(<Shimmer/>) :<>
 
 
 
-         <div className="w-full px-4 md:w-[90%] text-center md:text-left mx-auto text-3xl md:text-4xl  py-4" >Top Restaurants in {selectedCity.city}</div>
+         <div className="w-full px-4 md:w-[90%] text-center md:text-left mx-auto text-3xl md:text-4xl  py-4" >Top Restaurants in Bareilly</div>
          <div className="w-full px-4 md:w-[90%] text-center md:text-left  mx-auto text-3xl md:text-5xl font-bold  py-4" >
-            {selectedFood.name}
+          Your favourite Dishes
            
             </div>
         
-        <div id="res-container" className="w-full sm:w-[90%] mx-auto  flex flex-wrap justify-center gap-4
+        <div id="res-container" className="w-full  md:w-[95%] 3xl:w-[90%] mx-auto   flex flex-wrap justify-center gap-6
         mt-4">
             {
                 filtered.map((restaurant,index)=> 
-                    <Link to={"restaurant/"+restaurant.info.id}  key={restaurant?.info?.id}>
+                    <Link to={"restaurant/"+restaurant.info.id}  key={index+"="+restaurant?.info?.id}>
        
                            <RestaurantCard resdata={restaurant}/>
                     

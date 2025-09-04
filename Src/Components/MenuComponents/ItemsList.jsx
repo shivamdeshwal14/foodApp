@@ -14,7 +14,7 @@ const ItemsList=({items,resId})=>{
       dispatch(removeItem(item))
     }
     const cartItems=useSelector((store)=>store.cart.items);
-   console.log(items)
+ 
     
     return(
         <div >

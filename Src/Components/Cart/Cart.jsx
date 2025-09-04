@@ -9,10 +9,7 @@ const Cart=()=>{
      const cartItems=useSelector((store)=>store.cart.items);
      const restaurant=useSelector((store)=>store.restaurant.res);
      const user=useSelector((store)=>store.user.userDetails)
-    console.log(user);
-    
- 
-    
+    // console.log(user);  
      const dispatch=useDispatch();
      const handleClearCart=()=>{
         dispatch(clearCart())
@@ -27,23 +24,30 @@ const Cart=()=>{
    const total=itemTotal/100+deliveryCharge+handlingCharge;
     
     return <div className="w-full  bg-slate-100">
-       {cartItems.length!=0 && <div>
-            <div className="text-center md:text-4xl p-2 flex justify-center ">Ordering From <p className="italic mx-4 font-bold ">{" "+restaurant[0].restaurant.name}</p></div> 
+       {cartItems.length!=0 &&
+       
+       <div>
+            <div className="text-center md:text-4xl p-2 flex justify-center ">Ordering From <p className="italic mx-4 font-bold ">{" "+restaurant.name}</p></div> 
             <h1 className="text-center md:text-4xl p-2 font-bold ital"> Cart Items</h1>
-        </div>}
+        </div>
+        
+        }
          
 
             <div className=" w-full flex-col-reverse sm:flex-row ">
                  <div className="  ">
-                    {cartItems.length===0 && <div className="lg:w-[70%] xl:w-[50%] mx-auto items-center  text-2xl w-full h-screen flex justify-center"> Empty Cart!! <br />
-                    Add items to cart to place order !!</div>}
+                    {cartItems.length===0 &&
+                    
+                    <div className="lg:w-[70%] xl:w-[50%] mx-auto items-center  text-2xl w-full text-center py-8"> Empty Cart!! <br />
+                    Add items in cart to place order !!</div>
+                    
+                    }
                     <CartItemsList items={cartItems}/>
-                </div>
+                  </div>
                 {
                     cartItems.length!=0 &&
                     
-
-                    <div className=" w-full lg:w-[70%] xl:w-[50%] flex flex-col justify-between md:flex-row mx-auto mb-4 shadow-2xl shadow-gray py-2 px-4 rounded-2xl">
+                     <div className=" w-full lg:w-[70%] xl:w-[50%] flex flex-col justify-between md:flex-row mx-auto mb-4 shadow-2xl shadow-gray py-2 px-4 rounded-2xl">
                         <div className="w-full p-4">
                                  <h2 className="text-3xl">Billing </h2>
                                  <div className="text-xl py-2">

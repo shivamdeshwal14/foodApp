@@ -10,15 +10,18 @@ const RestaurantCard=(props)=>{
 
 
 return<>
-     <div id="res-card" className="min-h-80 w-56 rounded-xl bg-white hover:shadow-xl py-2 hover:cursor-pointer">
+     <div id="res-card" className="min-h-80 w-74 rounded-xl bg-white hover:shadow-xl  hover:cursor-pointer
+     hover:scale-98
+     transition-transform duration-300 ease-in-out
+     ">
         <img src={RES_URL+cloudinaryImageId}
-        className="rounded-xl h-42 w-full"
+        className="rounded-xl h-64 w-full"
         alt="" />
         <div className="py-4 px-2 space-y-2">
-        <p className="text-xl ">{name}</p>
+        <p className="text-2xl ">{name.slice(0,18)}</p>
         <p className="">*️⃣ {avgRating+" stars"+"   "+sla.slaString }</p>
-        <p className="text-slate-500 max-w-full break-all">{cuisines.join(',')}</p>  
-        <p className="text-slate-500">📍 {locality}</p>  
+        <p className="text-slate-500 text-xl max-w-full break-all">{cuisines.join(',').slice(0,20)+".."}</p>  
+        <p className="text-slate-500 text-xl">📍 {locality}</p>  
         </div>
         
      </div>

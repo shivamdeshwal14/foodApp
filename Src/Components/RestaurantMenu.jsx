@@ -22,15 +22,16 @@ import { addRes } from "../Redux/ResSlice";
     
 
 
-
+        
+        
             
-        const resDetails=resInfo?.data?.cards[2]?.card?.card?.info;
-        const categories=resInfo?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR
+        const resDetails=(resInfo?.data?.cards?.[2]?.card?.card?.info) || null;
+        const categories=resInfo?.data?.cards?.[4]?.groupedCard?.cardGroupMap?.REGULAR
         ?.cards.filter(function(card){
             return card?.card?.card?.["@type"]==='type.googleapis.com/swiggy.presentation.food.v2.ItemCategory';
         })
         || 
-        resInfo?.data?.cards[5]?.groupedCard?.cardGroupMap?.REGULAR
+        resInfo?.data?.cards?.[5]?.groupedCard?.cardGroupMap?.REGULAR
         ?.cards.filter(function(card){
             return card?.card?.card?.["@type"]==='type.googleapis.com/swiggy.presentation.food.v2.ItemCategory';
         })
@@ -42,6 +43,8 @@ import { addRes } from "../Redux/ResSlice";
 
         
         if(resInfo==null) return<MenuShimmer/> 
+
+
         
 
     
@@ -53,7 +56,11 @@ import { addRes } from "../Redux/ResSlice";
 
     
    return<>
-        <div className="w-full lg:w-[70%] xl:w-[50%] mx-auto">    
+
+   {
+    resDetails ? (  <div className="w-full lg:w-[70%] xl:w-[50%] mx-auto">    
+
+            
             <RestaurantDetailCard resDetails={resDetails}/>
             {/* <DealsForYou/> */}
            
@@ -77,6 +84,13 @@ import { addRes } from "../Redux/ResSlice";
 
                 
             </div>
+            ):(
+               <div>
+                <MenuShimmer/>
+               </div>
+            )
+   }
+      
         </>
 }
 export default RestaurantMenu;

@@ -37,8 +37,7 @@ const cartSlice=createSlice({
                     }
             }
             else{
-             console.log("CART CLEARED")
-             state.items=[{...item,quantity:1,resId}];
+                 state.items=[{...item,quantity:1,resId}];
 
             }
 

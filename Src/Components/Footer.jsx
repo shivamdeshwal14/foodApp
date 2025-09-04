@@ -10,7 +10,7 @@ const Footer=()=>{
 
                 <div>
                     <p>contact us at</p>
-                    <p>shivamdeshwal1414@gmail.com</p>
+                    <p className="break-all">shivamdeshwal1414@gmail.com</p>
                     <p>+91 7060890599</p>
 
                 </div>
